@@ -1,5 +1,4 @@
-private Item[] store = 
-{
+private Item[] store = {
   new Item(184, 14), 
   new Item(196, 60), 
   new Item(206, 31), 
@@ -21,34 +20,66 @@ private Item[] store =
   new Item(18871, 69), 
   new Item(19967, 45)
 };                             
-public int linearSearch(int catNumToFind)
-{
-  //complete this method
+public int linearSearch(int catNumToFind) {
+  for (int i = 0; i < store.length; i++) {
+    if(store[i].getCatNum() == catNumToFind) {
+      return i;
+    }
+  }
   return -1;
 }
-public int recursiveLinearSearch(int catNumToFind, int startIndex)
-{
-  //complete this method
+public int recursiveLinearSearch(int catNumToFind, int startIndex) {
+  if(store[startIndex].getCatNum() == catNumToFind) {
+    return startIndex;
+  }
+  else if(startIndex == store.length-1) {
+    return -1;
+  }
+  else {
+    return recursiveLinearSearch(catNumToFind,startIndex+1);
+  }
+}
+public int binarySearch(int catNumToFind) {
+  int k = store.length/2;
+  if(store[k].getCatNum() >= catNumToFind) { // go backwards
+    for(int i = k; i >= 0; i--) {
+      if(store[i].getCatNum() == catNumToFind) {
+        return i;
+      }
+    }
+  }
+  else { // go forwards
+    for(int i = k; i < store.length; i++) {
+      if(store[i].getCatNum() == catNumToFind) {
+        return i;
+      }
+    }
+  }    
   return -1;
 }
-public int binarySearch(int catNumToFind)
-{
-  //complete this method    
-  return -1;
+public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh) {
+  int k = (nLow+nHigh)/2;
+  if (nLow > nHigh) {
+    return -1;
+  }
+  else if (store[k].getCatNum() == catNumToFind) {
+    return k;
+  }
+  else {
+    if (store[k].getCatNum() < catNumToFind) { // go forwards
+      return recursiveBinarySearch(catNumToFind,nLow+1,nHigh);
+    }
+    else { // go backwards
+      return recursiveBinarySearch(catNumToFind,nLow,nHigh-1);
+    }
+  }    
 }
-public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh)
-{
-  //complete this method    
-  return -1;
-}
-public void setup()
-{
+public void setup() {
   int[] tests = {0, 183, 184, 2370, 15320, 19967, 19968};
   System.out.println();
   System.out.println("Testing Non-Recursive Linear Search");
   System.out.println("=====================");
-  for (int i = 0; i < tests.length; i++)
-  {
+  for (int i = 0; i < tests.length; i++) {
 
     if (linearSearch(tests[i]) != -1)
       System.out.println("Catalog #"+tests[i]+" has "+linearSearch(tests[i]) + " in stock");
@@ -58,8 +89,7 @@ public void setup()
   System.out.println();
   System.out.println("Testing Recursive Linear Search");
   System.out.println("=====================");
-  for (int i = 0; i < tests.length; i++)
-  {
+  for (int i = 0; i < tests.length; i++) {
 
     if (recursiveLinearSearch(tests[i],0) != -1)
       System.out.println("Catalog #"+tests[i]+" has "+recursiveLinearSearch(tests[i],0) + " in stock");
@@ -69,8 +99,7 @@ public void setup()
   System.out.println();
   System.out.println("Testing Non-Recursive Binary Search");
   System.out.println("===================================");
-  for (int i = 0; i < tests.length; i++)
-  {
+  for (int i = 0; i < tests.length; i++) {
 
     if (binarySearch(tests[i]) != -1)
       System.out.println("Catalog #"+tests[i]+" has "+binarySearch(tests[i]) + " in stock");
@@ -80,8 +109,7 @@ public void setup()
   System.out.println();
   System.out.println("Testing Recursive Binary Search");
   System.out.println("===============================");
-  for (int i = 0; i < tests.length; i++)
-  {
+  for (int i = 0; i < tests.length; i++) {
 
     if (recursiveBinarySearch(tests[i], 0, store.length - 1) != -1)
       System.out.println("Catalog #"+tests[i]+" has "+recursiveBinarySearch(tests[i], 0, store.length - 1) + " in stock");
@@ -90,10 +118,7 @@ public void setup()
   }
 }
 
-public void draw()
-{
-  //empty!
-}
+public void draw(){}
 
 
 
